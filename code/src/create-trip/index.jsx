@@ -3,7 +3,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import { Input } from '@/components/ui/input.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { SelectBudgetOptions, SelectTravelesList } from '@/constants/options.jsx';
-
+import { toast } from 'sonner';
 
 const CreateTrip = () => {
   const [place,setPlace] = useState();
@@ -22,8 +22,14 @@ const CreateTrip = () => {
   },[formData])
 
   const generateTrip=() => {
-
-    console.log(formData);
+    try {
+      if (!formData?.location || !formData?.budget || !formData?.traveler) {
+        toast("Please fill all details");
+        return;
+      }
+    } catch (error) {
+      console.error("There is an error" + error)
+    }
   }
 
   return (
