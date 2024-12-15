@@ -4,7 +4,7 @@ const {
     HarmBlockThreshold,
   } = require("@google/generative-ai");
   
-  const apiKey = process.env.GEMINI_API_KEY;
+  const apiKey = import.meta.env.VITE_GOOGLE_GEMINI_AI_API_KEY;
   const genAI = new GoogleGenerativeAI(apiKey);
   
   const model = genAI.getGenerativeModel({
@@ -16,11 +16,11 @@ const {
     topP: 0.95,
     topK: 40,
     maxOutputTokens: 8192,
-    responseMimeType: "text/plain",
+    responseMimeType: "application/json",
   };
   
-  async function run() {
-    const chatSession = model.startChat({
+  
+  export const chatSession = model.startChat({
       generationConfig,
       history: [
       ],
@@ -28,6 +28,5 @@ const {
   
     const result = await chatSession.sendMessage("INSERT_INPUT_HERE");
     console.log(result.response.text());
-  }
+
   
-  run();
